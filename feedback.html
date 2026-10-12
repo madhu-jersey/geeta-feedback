@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geeta Hospitals Feedback</title>
+  <style>
+    :root {
+      --primary: #6B2C7A;
+      --primary-dark: #4A1D55;
+      --bg: #FAF7FC;
+      --surface: #FFFFFF;
+      --text: #2E2A35;
+      --muted: #6B6878;
+      --border: #E4DFEA;
+      --success: #2E7D32;
+      --urgent: #B3261E;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      font-family: "Nirmala UI", "Noto Sans Telugu", "Noto Sans Devanagari", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 28px;
+    }
+
+    .app-shell {
+      width: min(100%, 620px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(107, 44, 122, 0.06);
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #f0dff3, #e7d4f0);
+      display: block;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 1.1;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .brand-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 18px 20px;
+      box-shadow: 0 4px 16px rgba(74, 29, 85, 0.06);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      color: var(--primary);
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .star-btn {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: #c7c0d1;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .star-btn:hover,
+    .star-btn:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .star-btn.active {
+      color: #F4C95D;
+      border-color: #F4C95D;
+      background: #fff8dc;
+    }
+
+    .field-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color 0.15s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(107, 44, 122, 0.08);
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: flex-end;
+      margin: 8px 2px 14px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .status {
+      min-height: 24px;
+      margin: 10px 0 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .status.error {
+      color: var(--urgent);
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      background: var(--primary);
+      color: white;
+      border-radius: 14px;
+      padding: 16px 22px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover:not(:disabled),
+    .submit-btn:focus-visible:not(:disabled) {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 14px 10px 2px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 520px) {
+      .card {
+        padding-left: 26px;
+        padding-right: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <img class="brand-logo" src="logo.png" alt="Geeta Hospitals logo">
+      <div class="brand-text">
+        <h1>Geeta Hospitals</h1>
+        <p>గీతా హాస్పటల్స్</p>
+      </div>
+    </header>
+
+    <main class="card">
+      <form id="feedbackForm" novalidate>
+        <h2>How was your experience?</h2>
+        <p class="subtitle">మీ అనుభవం ఎలా ఉంది?</p>
+
+        <div class="stars" aria-label="Optional star rating">
+          <button type="button" class="star-btn" data-rating="1" aria-label="1 star" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-rating="2" aria-label="2 stars" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-rating="3" aria-label="3 stars" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-rating="4" aria-label="4 stars" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-rating="5" aria-label="5 stars" aria-pressed="false">★</button>
+        </div>
+
+        <label class="field-label" for="feedback">Your feedback</label>
+        <textarea id="feedback" maxlength="1000" placeholder="Tell us about your visit..."></textarea>
+        <div class="meta-row"><span id="charCount">0/1000</span></div>
+
+        <input class="visually-hidden" type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+
+        <div id="formMessage" class="status" role="status" aria-live="polite"></div>
+        <button type="submit" id="submitButton" class="submit-btn">Submit feedback</button>
+      </form>
+    </main>
+
+    <footer>
+      Emergency: 08819-224246<br>
+      Feedback is for service improvement, not for emergencies.
+    </footer>
+  </div>
+
+  <script>
+    // Paste the Apps Script web app URL here (see SETUP.md, step 2).
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbIHw8EQ_V0RbLvLYcfFMPBerC6jUfzKAQHnfcDDnSuth8Ly7KvMSh5oTKmBb9uO5qQA/exec";
+    const RATE_LIMIT_MS = 60000;
+    const RATE_LIMIT_KEY = "geeta_hospitals_feedback_last_sent";
+    const SUCCESS_TEXT = "Thank you, your feedback is saved";
+
+    // No AI key or other secret belongs in this file.
+
+    const form = document.getElementById("feedbackForm");
+    const feedbackField = document.getElementById("feedback");
+    const honeypotField = document.getElementById("website");
+    const submitButton = document.getElementById("submitButton");
+    const formMessage = document.getElementById("formMessage");
+    const charCount = document.getElementById("charCount");
+    const starButtons = Array.from(document.querySelectorAll(".star-btn"));
+
+    let selectedRating = null;
+
+    function setMessage(type, text) {
+      formMessage.className = "status " + type;
+      formMessage.textContent = text;
+    }
+
+    function setSubmitState(isLoading) {
+      submitButton.disabled = isLoading;
+      submitButton.textContent = isLoading ? "Saving..." : "Submit feedback";
+    }
+
+    // Returns the number of seconds left before another submission is allowed (0 if allowed).
+    function secondsUntilAllowed() {
+      const last = Number(localStorage.getItem(RATE_LIMIT_KEY));
+      if (!Number.isFinite(last) || last <= 0) return 0;
+      const remainingMs = RATE_LIMIT_MS - (Date.now() - last);
+      return remainingMs > 0 ? Math.ceil(remainingMs / 1000) : 0;
+    }
+
+    // Removes HTML tags and control characters. Applied on submit only, so typing
+    // spaces is never interfered with.
+    function sanitizeFeedback(value) {
+      return String(value || "")
+        .replace(/<[^>]*>/g, " ")
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function showStars(value) {
+      starButtons.forEach((button) => {
+        const active = Number(button.dataset.rating) <= value;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(Number(button.dataset.rating) === value));
+      });
+    }
+
+    starButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const tapped = Number(button.dataset.rating);
+        // Tapping the selected star again clears the rating.
+        selectedRating = selectedRating === tapped ? null : tapped;
+        showStars(selectedRating || 0);
+      });
+    });
+
+    feedbackField.addEventListener("input", () => {
+      charCount.textContent = feedbackField.value.length + "/1000";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Honeypot: real patients never fill this hidden field. Show success, save nothing.
+      if (honeypotField.value.trim() !== "") {
+        setMessage("success", SUCCESS_TEXT);
+        return;
+      }
+
+      const waitSeconds = secondsUntilAllowed();
+      if (waitSeconds > 0) {
+        setMessage("error", "Please wait " + waitSeconds + " seconds before sending another feedback.");
+        return;
+      }
+
+      const feedbackText = sanitizeFeedback(feedbackField.value);
+      if (feedbackText.length < 2) {
+        setMessage("error", "Please write at least 2 characters of feedback.");
+        feedbackField.focus();
+        return;
+      }
+      if (feedbackText.length > 1000) {
+        setMessage("error", "Feedback must be 1000 characters or fewer.");
+        feedbackField.focus();
+        return;
+      }
+
+      const payload = {
+        rating: selectedRating !== null ? selectedRating : "",
+        feedback: feedbackText,
+        website: "",
+        clientTimestamp: new Date().toISOString()
+      };
+
+      setSubmitState(true);
+      setMessage("", "");
+
+      try {
+        // text/plain avoids a browser preflight request, which Apps Script cannot answer.
+        // The body is still JSON text and the server parses it.
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        let result = null;
+        try {
+          result = await response.json();
+        } catch (parseError) {
+          result = null;
+        }
+
+        if (!response.ok || !result || result.ok !== true) {
+          const serverMessage = result && result.error ? result.error : "Feedback could not be saved. Please try again.";
+          setMessage("error", serverMessage + " Your text is still here, so you can try again.");
+          return;
+        }
+
+        localStorage.setItem(RATE_LIMIT_KEY, String(Date.now()));
+        setMessage("success", SUCCESS_TEXT);
+        form.reset();
+        selectedRating = null;
+        showStars(0);
+        charCount.textContent = "0/1000";
+      } catch (error) {
+        setMessage("error", "The service is unavailable right now. Your text is still here, so you can try again later.");
+      } finally {
+        setSubmitState(false);
+      }
+    });
+
+    showStars(0);
+    charCount.textContent = "0/1000";
+  </script>
+</body>
+</html>
